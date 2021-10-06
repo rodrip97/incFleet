@@ -1,0 +1,74 @@
+{% extends 'inventory/base.html' %}
+{% block body %}
+<br>
+<div class="btn-group" role="group">
+    <a href="{% url 'displayTrucks' %}" class="btn btn-primary btn-md" role="button">Trucks</a>
+    <a href="{% url 'addTrucks' %}" class="btn btn-warning btn-md" role="button" >+</a>
+</div>
+<div class="btn-group">
+    <a href="{% url 'displaySmallVehicles' %}" class="btn btn-primary btn-md" role="button">Cars</a>
+    <a href="" class="btn btn-warning btn-md" role="button">+</a>
+</div>
+<br>
+
+<h4>Currently Viewing {{ header }}</h4>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Nickname</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Plate</th>
+        <th>VIN</th>
+        <th>ezPass</th>
+        <th>Mileage</th>
+        <th>Problems</th>
+        <th>Inspection</th>
+        <th>License</th>
+        <th>Oil Change</th>
+        <th>Monitored</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for item in items %}
+    <tr>
+        <th>{{ item.nickname }}</th>
+        <th>{{ item.make }}</th>
+        <th>{{ item.model }}</th>
+        <th>{{ item.type }}</th>
+        <th>{{ item.plate }}</th>
+        <th>{{ item.vin }}</th>
+        <th>{{ item.ezpass }}</th>
+        <th>{{ item.mileage }}</th>
+        <th>{{ item.reportedProblem }}</th>
+        <th>{{ item.inspection }}</th>
+        <th>{{ item.resgistration }}</th>
+        <th>{{ item.oilChange }}</th>
+        <th>{{ item.isMonitored }}</th>
+        <th>{{ item.status }}</th>
+
+        {% if header|lower == "trucks" %}
+        <td>
+            <div class="btn-group" role="group">
+                <a href="" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            </div>
+        </td>
+        {% elif header == "Cars" %}
+        <td>
+            <div class="btn-group" role="group">
+                <a href="" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            </div>
+        </td>
+        {% endif %}
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
