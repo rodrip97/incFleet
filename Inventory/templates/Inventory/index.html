@@ -7,7 +7,7 @@
 </div>
 <div class="btn-group">
     <a href="{% url 'displaySmallVehicles' %}" class="btn btn-primary btn-md" role="button">Cars</a>
-    <a href="" class="btn btn-warning btn-md" role="button">+</a>
+    <a href="{% url 'addSmallVehicles' %}" class="btn btn-warning btn-md" role="button">+</a>
 </div>
 <br>
 
@@ -41,11 +41,11 @@
         <th>{{ item.type }}</th>
         <th>{{ item.plate }}</th>
         <th>{{ item.vin }}</th>
-        <th>{{ item.ezpass }}</th>
+        <th>{{ item.ezPass }}</th>
         <th>{{ item.mileage }}</th>
         <th>{{ item.reportedProblem }}</th>
         <th>{{ item.inspection }}</th>
-        <th>{{ item.resgistration }}</th>
+        <th>{{ item.registration }}</th>
         <th>{{ item.oilChange }}</th>
         <th>{{ item.isMonitored }}</th>
         <th>{{ item.status }}</th>
@@ -53,22 +53,20 @@
         {% if header|lower == "trucks" %}
         <td>
             <div class="btn-group" role="group">
-                <a href="" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+                <a href="{% url 'editTrucks' item.pk%}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+                <a href="{% url 'deleteTrucks' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > X</a>
             </div>
         </td>
-        {% elif header == "Cars" %}
+        {% elif header|lower == "cars" %}
         <td>
             <div class="btn-group" role="group">
-                <a href="" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+                <a href="{% url 'editSmallVehicles' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+                <a href="{% url 'deleteSmallVehicles' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > X</a>
             </div>
         </td>
         {% endif %}
-
     </tr>
-
     {% endfor %}
-
     </tbody>
 </table>
-
 {% endblock %}

@@ -16,4 +16,8 @@ class smallVehiclesForm(forms.ModelForm):
     class Meta:
         model = smallVehicles
         fields = "__all__"
+        widgets = {
+            'registration': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
+            'inspection': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
+        }
 

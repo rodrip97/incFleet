@@ -33,20 +33,20 @@ def addTrucks(request):
         form = trucksForms(request.POST)
         if form.is_valid():
             truck_info = trucks(
-                nickname=data['inspection'],
-                make=data['inspection'],
-                model=data['inspection'],
-                type=data['inspection'],
-                plate=data['inspection'],
-                vin=data['inspection'],
-                ezPass=data['inspection'],
-                mileage=data['inspection'],
-                reportedProblem=data['inspection'],
+                nickname=data['nickname'],
+                make=data['make'],
+                model=data['model'],
+                type=data['type'],
+                plate=data['plate'],
+                vin=data['vin'],
+                ezPass=data['ezPass'],
+                mileage=data['mileage'],
+                reportedProblem=data['reportedProblem'],
                 inspection=convert_date(data['inspection']),
                 registration=convert_date(data['registration']),
-                oilChange=data['inspection'],
-                isMonitored=data['inspection'],
-                status=data['inspection'],
+                oilChange=data['oilChange'],
+                isMonitored=data['isMonitored'],
+                status=data['status'],
             )
             truck_info.save()
             return redirect('index')
@@ -56,32 +56,70 @@ def addTrucks(request):
 
 
 def addSmallVehicles(request):
+    data = request.POST
     if request.method == "POST":
         form = smallVehiclesForm(request.POST)
         if form.is_valid():
-            form.save()
+            smallVehicles_info = smallVehicles(
+                nickname=data['nickname'],
+                make=data['make'],
+                model=data['model'],
+                type=data['type'],
+                plate=data['plate'],
+                vin=data['vin'],
+                ezPass=data['ezPass'],
+                mileage=data['mileage'],
+                reportedProblem=data['reportedProblem'],
+                inspection=convert_date(data['inspection']),
+                registration=convert_date(data['registration']),
+                oilChange=data['oilChange'],
+                isMonitored=data['isMonitored'],
+                status=data['status'],
+            )
+            smallVehicles_info.save()
             return redirect('index')
     else:
         form = smallVehiclesForm()
-        return render(request, 'Inventory/add_new', {'form': form})
+        return render(request, 'Inventory/add_new.html', {'form': form})
 
 
-def editItem(request, pk, model, cls):
-    item = get_object_or_404(model, pk=pk)
+def editTrucks(request, pk):
+    item = get_object_or_404(trucks, pk=pk)
 
     if request.method == "POST":
-        form = cls(request.POST, instance=item)
+        form = trucksForms(request.POST, instance=item)
         if form.is_valid():
             form.save()
             return redirect('index')
     else:
-        form = cls(instance=item)
+        form = trucksForms(instance=item)
         return render(request, 'Inventory/edit_items.html', {'form': form})
 
 
-def editTrucks(request, pk):
-    return editItem(request, pk, trucks, trucksForms)
-
-
 def editSmallVehicles(request, pk):
-    return editItem(request, pk, smallVehicles, smallVehiclesForm)
+    item = get_object_or_404(smallVehicles, pk=pk)
+
+    if request.method == "POST":
+        form = smallVehiclesForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = smallVehiclesForm(instance=item)
+        return render(request, 'Inventory/edit_items.html', {'form': form})
+
+
+def deleteTrucks(request, pk):
+    trucks.objects.filter(id=pk).delete()
+    items = trucks.objects.all()
+    context = {'items': items}
+
+    return render(request, 'Inventory/index.html', context)
+
+
+def deleteSmallVehicles(request, pk):
+    smallVehicles.objects.filter(id=pk).delete()
+    items = smallVehicles.objects.all()
+    context = {'items': items}
+
+    return render(request, 'Inventory/index.html', context)
