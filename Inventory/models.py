@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -20,6 +22,15 @@ class trucks(models.Model):
 
     def __str__(self):
         return 'Nickname: {0}'.format(self.nickname)
+
+    def inspection_valid_check(self):
+        if self.inspection.strptime(self.inspection, "%d%m%y%H%M%S") > datetime.today().date():
+            self.inspection_active = True
+            self.save()
+            print('Inspection is valid!')
+        else:
+            self.inspection_active = False
+            print('Inspection is expired!')
 
 
 # for vans and personal cars EG: Omesh Kia or Mohammed Pick up truck
