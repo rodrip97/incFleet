@@ -132,6 +132,7 @@ DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
 EMAIL_PORT = 465
 
 # Celery Broker - Redis
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-CELERY_TIMEZONE = "America/New_York"
+CELERY_BROKER_URL = 'redis://:p0445df1196b44ba70a9bd0c84545315fec8a5dcbd77c8e8c4bd22ff4cd0a2ff4@ec2-54-167-58-171.compute-1.amazonaws.com:11900/'
+CELERY_RESULT_BACKEND = 'redis://:p0445df1196b44ba70a9bd0c84545315fec8a5dcbd77c8e8c4bd22ff4cd0a2ff4@ec2-54-167-58-171.compute-1.amazonaws.com:11900/'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
