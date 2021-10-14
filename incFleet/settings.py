@@ -123,16 +123,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DJANGO_CONFIG = []
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
-EMAIL_PORT = 465
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": None
+            },
+        }
+    }
+}
 # Celery Broker - Redis
-CELERY_BROKER_URL = 'redis://:p0445df1196b44ba70a9bd0c84545315fec8a5dcbd77c8e8c4bd22ff4cd0a2ff4@ec2-54-167-58-171.compute-1.amazonaws.com:11900/'
-CELERY_RESULT_BACKEND = 'redis://:p0445df1196b44ba70a9bd0c84545315fec8a5dcbd77c8e8c4bd22ff4cd0a2ff4@ec2-54-167-58-171.compute-1.amazonaws.com:11900/'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_URL = 'redis://:pd23d8ad848cc8ca30d43cebc4e285538878c8e54d6132d2ef29c333b23cae698@ec2-54-221-235-219.compute-1.amazonaws.com:12420'
+CELERY_RESULT_BACKEND = 'redis://:pd23d8ad848cc8ca30d43cebc4e285538878c8e54d6132d2ef29c333b23cae698@ec2-54-221-235-219.compute-1.amazonaws.com:12420'
+BROKER_POOL_LIMIT = 1
+BROKER_CONNECTION_MAX_RETRIES = None
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+# EMAIL CONFIGS
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'internationalconcretescans178@gmail.com'
+EMAIL_HOST_PASSWORD = 'CesarisAwesome123'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+DEFAULT_FROM_EMAIL = 'internationalconcretescans178@gmail.com'

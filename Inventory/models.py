@@ -5,10 +5,13 @@ from django.db import models
 
 # All Trucks (Flatbeds, booms whatever, not pick ups)
 class trucks(models.Model):
+    TYPE_CHOICES = (('Sedan', 'Sedan'), ('Pickup', 'Pickup'), ('SUV', 'SUV'))
+    MON_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
+
     nickname = models.CharField(blank=False, null=True, default=None, max_length=80)
     make = models.CharField(blank=False, null=True, default=None, max_length=80)
     model = models.CharField(blank=False, null=True, default=None, max_length=80)
-    type = models.CharField(blank=False, null=True, default=None, max_length=80)
+    type = models.CharField(blank=False, null=True, choices=TYPE_CHOICES, default=None, max_length=80)
     plate = models.CharField(blank=False, null=True, default=None, max_length=80)
     vin = models.CharField(blank=False, null=True, default=None, max_length=80)
     ezPass = models.CharField(blank=False, null=True, default=None, max_length=80)
@@ -17,7 +20,7 @@ class trucks(models.Model):
     inspection = models.DateField(blank=False, null=True, default=None)
     registration = models.DateField(blank=False, null=True, default=None)
     oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
-    isMonitored = models.CharField(blank=False, null=True, default=None, max_length=80)
+    isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
 
     def __str__(self):
@@ -35,10 +38,13 @@ class trucks(models.Model):
 
 # for vans and personal cars EG: Omesh Kia or Mohammed Pick up truck
 class smallVehicles(models.Model):
+    TYPE_CHOICES = (('Sedan', 'Sedan'), ('Pickup', 'Pickup'), ('SUV', 'SUV'))
+    MON_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
+
     nickname = models.CharField(blank=False, null=True, default=None, max_length=80)
     make = models.CharField(blank=False, null=True, default=None, max_length=80)
     model = models.CharField(blank=False, null=True, default=None, max_length=80)
-    type = models.CharField(blank=False, null=True, default=None, max_length=80)
+    type = models.CharField(blank=False, null=True, choices=TYPE_CHOICES, default=None, max_length=80)
     plate = models.CharField(blank=False, null=True, default=None, max_length=80)
     vin = models.CharField(blank=False, null=True, default=None, max_length=80)
     ezPass = models.CharField(blank=False, null=True, default=None, max_length=80)
@@ -47,8 +53,14 @@ class smallVehicles(models.Model):
     inspection = models.DateField(blank=False, null=True, default=None, max_length=80)
     registration = models.DateField(blank=False, null=True, default=None, max_length=80)
     oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
-    isMonitored = models.CharField(blank=False, null=True, default=None, max_length=80)
+    isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
 
     def __str__(self):
         return 'Nickname: {0}'.format(self.nickname)
+
+
+class Permits(models.Model):
+    name = models.CharField(blank=False, null=False, default=None, max_length=80)
+    address = models.CharField(blank=False, null=False, default=None, max_length=80)
+    type
