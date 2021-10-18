@@ -1,5 +1,12 @@
 {% extends 'inventory/base.html' %}
 {% block body %}
+    <title>INC Fleet</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
 <br>
 <div class="btn-group" role="group">
     <a href="{% url 'displayTrucks' %}" class="btn btn-primary btn-md" role="button">Trucks</a>
@@ -16,38 +23,20 @@
     <thead>
     <tr>
         <th>Nickname</th>
-        <th>Make</th>
-        <th>Model</th>
         <th>Type</th>
         <th>Plate</th>
-        <th>VIN</th>
-        <th>ezPass</th>
-        <th>Mileage</th>
         <th>Problems</th>
-        <th>Inspection</th>
-        <th>License</th>
-        <th>Oil Change</th>
-        <th>Monitored</th>
-        <th>Status</th>
+        <th>Location</th>
     </tr>
     </thead>
     <tbody>
 
     {% for item in items %}
     <tr>
-        <th>{{ item.nickname }}</th>
+        <th><a href="{% url 'truckdetails' item.pk %}" class="bi bi-search"> </a>{{ item.nickname }}</th>
         <th>{{ item.make }}</th>
-        <th>{{ item.model }}</th>
-        <th>{{ item.type }}</th>
         <th>{{ item.plate }}</th>
-        <th>{{ item.vin }}</th>
-        <th>{{ item.ezPass }}</th>
-        <th>{{ item.mileage }}</th>
         <th>{{ item.reportedProblem }}</th>
-        <th>{{ item.inspection }}</th>
-        <th>{{ item.registration }}</th>
-        <th>{{ item.oilChange }}</th>
-        <th>{{ item.isMonitored }}</th>
         <th>{{ item.status }}</th>
 
         {% if header|lower == "trucks" %}
@@ -55,6 +44,7 @@
             <div class="btn-group" role="group">
                 <a href="{% url 'editTrucks' item.pk%}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
                 <a href="{% url 'deleteTrucks' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > X</a>
+
             </div>
         </td>
         {% elif header|lower == "cars" %}

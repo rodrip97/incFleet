@@ -1,7 +1,7 @@
 
 from django.urls import path
 from Inventory import views
-
+from .views import *
 
 urlpatterns = [
     path('displayTrucks', views.displayTrucks, name='displayTrucks'),
@@ -14,5 +14,7 @@ urlpatterns = [
     path('addSmallVehicles', views.addSmallVehicles, name='addSmallVehicles'),
     path('editSmallVehicles/<int:pk>', views.editSmallVehicles, name='editSmallVehicles'),
     path('deleteSmallVehicles/<int:pk>', views.deleteSmallVehicles, name='deleteSmallVehicles'),
+
+    path('TruckDetailView/<int:pk>', views.TruckDetailView, name='truckdetails')
 ]
 

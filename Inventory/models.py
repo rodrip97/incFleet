@@ -5,7 +5,7 @@ from django.db import models
 
 # All Trucks (Flatbeds, booms whatever, not pick ups)
 class trucks(models.Model):
-    TYPE_CHOICES = (('Sedan', 'Sedan'), ('Pickup', 'Pickup'), ('SUV', 'SUV'))
+    TYPE_CHOICES = (('Sedan', 'Sedan'), ('Pickup', 'Pickup'), ('SUV', 'SUV'), ('Flatbed', 'Flatbed'))
     MON_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 
     nickname = models.CharField(blank=False, null=True, default=None, max_length=80)
@@ -22,18 +22,21 @@ class trucks(models.Model):
     oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
+    title = models.ImageField(upload_to='inventory/statics/title_pics', default='default.jpg')
+    insurance_card = models.ImageField(upload_to='inventory/static/insurance_cards', default='default.jpg')
 
     def __str__(self):
         return 'Nickname: {0}'.format(self.nickname)
 
-    def inspection_valid_check(self):
-        if self.inspection.strptime(self.inspection, "%d%m%y%H%M%S") > datetime.today().date():
-            self.inspection_active = True
-            self.save()
-            print('Inspection is valid!')
-        else:
-            self.inspection_active = False
-            print('Inspection is expired!')
+
+# def inspection_valid_check(self):
+#    if self.inspection.strptime(self.inspection, "%d%m%y%H%M%S") > datetime.today().date():
+#        self.inspection_active = True
+#        self.save()
+#        print('Inspection is valid!')
+#    else:
+#        self.inspection_active = False
+#        print('Inspection is expired!')
 
 
 # for vans and personal cars EG: Omesh Kia or Mohammed Pick up truck
@@ -55,12 +58,17 @@ class smallVehicles(models.Model):
     oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
+    title = models.ImageField(upload_to='inventory/statics/title_pics', default='default.jpg')
+    insurance_card = models.ImageField(upload_to='inventory/static/insurance_cards', default='default.jpg')
 
     def __str__(self):
         return 'Nickname: {0}'.format(self.nickname)
 
 
 class Permits(models.Model):
+    permit_type_choices = (('Fire Hydrant', 'Fire Hydrant'), ('Parking', 'Parking'), ('Boom', 'Boom'))
+
     name = models.CharField(blank=False, null=False, default=None, max_length=80)
+    type = models.CharField(blank=False, null=False, max_length=80, choices=permit_type_choices)
     address = models.CharField(blank=False, null=False, default=None, max_length=80)
-    type
+    exp_date = models.DateField(blank=False, null=False, max_length=80)

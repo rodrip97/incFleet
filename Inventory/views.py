@@ -1,12 +1,13 @@
 import datetime
+
+from django.shortcuts import render, redirect, get_object_or_404
+
 from .forms import *
 from .models import *
-from django.shortcuts import render, redirect, get_object_or_404
-from .tasks import sleepy
 
 
 def index(request):
-    #sleepy.delay(5)
+    # sleepy.delay(5)
     return render(request, 'Inventory/index.html')
 
 
@@ -123,3 +124,18 @@ def deleteSmallVehicles(request, pk):
     context = {'items': items}
 
     return render(request, 'Inventory/index.html', context)
+
+
+def TruckDetailView(request, pk):
+    item = trucks.objects.filter(pk=pk)
+    context = {'item': item}
+
+    return render(request, 'Inventory/item_details.html', context)
+
+
+def VehicleView(request, pk):
+    item = smallVehicles.objects.filter(pk=pk)
+    context = {'item': item}
+
+    return render(request, 'Inventory/item_details.html', context)
+

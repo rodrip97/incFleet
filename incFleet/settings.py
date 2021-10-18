@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import redis
 from pathlib import Path
 import os
 
+
+#r = redis.from_url(os.environ.get("REDIS_URL"))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Inventory',
-    'Users',
     'celery',
 ]
 
@@ -120,8 +121,8 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = 'inventory/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'inventory/static')
 DJANGO_CONFIG = []
 
 CACHES = {
@@ -130,20 +131,16 @@ CACHES = {
         "LOCATION": os.environ.get('REDIS_URL'),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {
-                "ssl_cert_reqs": None
-            },
         }
     }
 }
 # Celery Broker - Redis
-CELERY_BROKER_URL = 'redis://:pd23d8ad848cc8ca30d43cebc4e285538878c8e54d6132d2ef29c333b23cae698@ec2-54-221-235-219.compute-1.amazonaws.com:12420'
-CELERY_RESULT_BACKEND = 'redis://:pd23d8ad848cc8ca30d43cebc4e285538878c8e54d6132d2ef29c333b23cae698@ec2-54-221-235-219.compute-1.amazonaws.com:12420'
+CELERY_BROKER_URL = 'redis://:pf60019e00647f9b98b723898933f15b13722ab07b301451115c124e80838b0a8@ec2-52-23-125-111.compute-1.amazonaws.com:31830'
+CELERY_RESULT_BACKEND = 'redis://:pf60019e00647f9b98b723898933f15b13722ab07b301451115c124e80838b0a8@ec2-52-23-125-111.compute-1.amazonaws.com:31830'
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 # EMAIL CONFIGS
 EMAIL_HOST = 'smtp.gmail.com'
