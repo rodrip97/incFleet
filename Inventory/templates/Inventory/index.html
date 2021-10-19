@@ -33,7 +33,7 @@
 
     {% for item in items %}
     <tr>
-        <th><a href="{% url 'truckdetails' item.pk %}" class="bi bi-search"> </a>{{ item.nickname }}</th>
+        <th>{{ item.nickname }}</th>
         <th>{{ item.make }}</th>
         <th>{{ item.plate }}</th>
         <th>{{ item.reportedProblem }}</th>
@@ -42,16 +42,14 @@
         {% if header|lower == "trucks" %}
         <td>
             <div class="btn-group" role="group">
-                <a href="{% url 'editTrucks' item.pk%}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
-                <a href="{% url 'deleteTrucks' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > X</a>
+                <a href="{% url 'truckdetails' item.pk %}" class="bi bi-search"> </a>
 
             </div>
         </td>
         {% elif header|lower == "cars" %}
         <td>
             <div class="btn-group" role="group">
-                <a href="{% url 'editSmallVehicles' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
-                <a href="{% url 'deleteSmallVehicles' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > X</a>
+                <a href="{% url 'vehicledetails' item.pk %}" class="bi bi-search"> </a>
             </div>
         </td>
         {% endif %}

@@ -127,15 +127,15 @@ def deleteSmallVehicles(request, pk):
 
 
 def TruckDetailView(request, pk):
-    item = trucks.objects.filter(pk=pk)
-    context = {'item': item}
+    items = trucks.objects.filter(pk=pk)
+    context = {'items': items}
 
-    return render(request, 'Inventory/item_details.html', context)
+    return render(request, 'Inventory/truck_details.html', context)
 
 
-def VehicleView(request, pk):
-    item = smallVehicles.objects.filter(pk=pk)
-    context = {'item': item}
+def VehicleDetailView(request, pk):
+    items = smallVehicles.objects.filter(pk=pk)
+    context = {'items': items}
 
-    return render(request, 'Inventory/item_details.html', context)
+    return render(request, 'Inventory/vehicle_details.html', context)
 

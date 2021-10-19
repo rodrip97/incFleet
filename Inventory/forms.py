@@ -1,4 +1,5 @@
 from django import forms
+
 from Inventory.models import trucks, smallVehicles
 
 
@@ -9,6 +10,7 @@ class trucksForms(forms.ModelForm):
         widgets = {
             'registration': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
             'inspection': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
+            'oilChange': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
         }
 
 
@@ -19,5 +21,5 @@ class smallVehiclesForm(forms.ModelForm):
         widgets = {
             'registration': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
             'inspection': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
+            'oilChange': forms.DateInput(attrs={'placeholder': 'Select Date', 'type': 'date'}),
         }
-

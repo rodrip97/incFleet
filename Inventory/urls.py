@@ -15,6 +15,8 @@ urlpatterns = [
     path('editSmallVehicles/<int:pk>', views.editSmallVehicles, name='editSmallVehicles'),
     path('deleteSmallVehicles/<int:pk>', views.deleteSmallVehicles, name='deleteSmallVehicles'),
 
-    path('TruckDetailView/<int:pk>', views.TruckDetailView, name='truckdetails')
+    path('TruckDetailView/<int:pk>', views.TruckDetailView, name='truckdetails'),
+    path('VehicleDetails/<int:pk>', views.VehicleDetailView, name='vehicledetails')
+
 ]
 

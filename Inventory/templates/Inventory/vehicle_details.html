@@ -1,0 +1,54 @@
+{% extends 'inventory/base.html' %}
+{% block body %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+{% for item in items %}
+<h4>Currently Viewing: {{ item.nickname }}</h4> <p>
+<div class="mark">
+    <div class=" text-center ">
+
+        <p>
+        <h4> Make: {{ item.make }}</h4>
+        <p>
+        <h4> Model: {{item.model}} </h4>
+        <p>
+        <h4> Type: {{ item.type }}</h4>
+        <p>
+        <h4> Plate: {{ item.plate}}</h4>
+        <p>
+        <h4> Vin: {{item.vin}}</h4>
+        <p>
+        <h4> EZ PASS: {{item.ezPass}}</h4>
+        <p>
+        <h4> Mileage: {{item.mileage}}</h4>
+        <p>
+        <h4> Rep. Problem: {{item.reportedProblem}}</h4>
+        <p>
+        <h4> Inspection:{{item.inspection}}</h4>
+        <p>
+        <h4> Registration: {{item.registration}}</h4>
+        <p>
+        <h4> Oil Change: {{item.oilChange}}</h4>
+        <p>
+        <h4> Monitored: {{item.isMonitored}}</h4>
+        <p>
+        <h4> Location: {{item.status}}</h4>
+        <p>
+</div>
+<td>
+    <div class="btn" >
+        <a href="{% url 'editSmallVehicles' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true">Edit</a>
+        <a href="{% url 'index' %}" type="button" class="btn btn-warning btn-sm"> <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a href="{% url 'deleteSmallVehicles' item.pk %}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">X</a>
+    </div>
+</td>
+
+{% endfor %}
+
+{% endblock %}

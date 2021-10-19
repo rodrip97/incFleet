@@ -19,14 +19,14 @@ class trucks(models.Model):
     reportedProblem = models.CharField(blank=False, null=True, default=None, max_length=80)
     inspection = models.DateField(blank=False, null=True, default=None)
     registration = models.DateField(blank=False, null=True, default=None)
-    oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
+    oilChange = models.DateField(blank=False, null=True, default=None)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
-    title = models.ImageField(upload_to='inventory/statics/title_pics', default='default.jpg')
-    insurance_card = models.ImageField(upload_to='inventory/static/insurance_cards', default='default.jpg')
+    title = models.ImageField(upload_to='Inventory/static/title_pics', default='default.jpg')
+    insurance_card = models.ImageField(upload_to='Inventory/static/insurance_cards', default='default.jpg')
 
     def __str__(self):
-        return 'Nickname: {0}'.format(self.nickname)
+        return format(self.nickname)
 
 
 # def inspection_valid_check(self):
@@ -55,14 +55,25 @@ class smallVehicles(models.Model):
     reportedProblem = models.CharField(blank=False, null=True, default=None, max_length=80)
     inspection = models.DateField(blank=False, null=True, default=None, max_length=80)
     registration = models.DateField(blank=False, null=True, default=None, max_length=80)
-    oilChange = models.CharField(blank=False, null=True, default=None, max_length=80)
+    oilChange = models.DateField(blank=False, null=True, default=None)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
-    title = models.ImageField(upload_to='inventory/statics/title_pics', default='default.jpg')
-    insurance_card = models.ImageField(upload_to='inventory/static/insurance_cards', default='default.jpg')
+    title = models.ImageField(default='default.jpg', uploadto='static/title_pics')
+    insurance_card = models.ImageField(upload_to='Inventory/static/insurance_cards', default='default.jpg')
+
+    # def inspection_valid_check(self):
+    #    if self.inspection.strptime(self.inspection, "%d%m%y%H%M%S") > datetime.today().date():
+    #        self.inspection_active = True
+    #        self.save()
+    #        print('Inspection is valid!')
+    #    else:
+    #        self.inspection_active = False
+    #        print('Inspection is expired!')
+
+
 
     def __str__(self):
-        return 'Nickname: {0}'.format(self.nickname)
+        return format(self.nickname)
 
 
 class Permits(models.Model):
