@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from PIL import Image
 from django.db import models
 
 
@@ -22,8 +22,8 @@ class trucks(models.Model):
     oilChange = models.DateField(blank=False, null=True, default=None)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
-    title = models.ImageField(upload_to='Inventory/static/title_pics', default='default.jpg')
-    insurance_card = models.ImageField(upload_to='Inventory/static/insurance_cards', default='default.jpg')
+    title = models.ImageField(default='default.jpg', upload_to='media/title_pics/')
+    insurance_card = models.ImageField(default='default.jpg', upload_to='media/insurance_cards/')
 
     def __str__(self):
         return format(self.nickname)
@@ -58,8 +58,8 @@ class smallVehicles(models.Model):
     oilChange = models.DateField(blank=False, null=True, default=None)
     isMonitored = models.CharField(blank=False, null=True, choices=MON_CHOICES, default=None, max_length=80)
     status = models.CharField(blank=False, null=True, default=None, max_length=80)
-    title = models.ImageField(default='default.jpg', uploadto='static/title_pics')
-    insurance_card = models.ImageField(upload_to='Inventory/static/insurance_cards', default='default.jpg')
+    title = models.ImageField(default='default.jpg', upload_to='media/title_pics/')
+    insurance_card = models.ImageField(default='default.jpg', upload_to='media/insurance_cards/')
 
     # def inspection_valid_check(self):
     #    if self.inspection.strptime(self.inspection, "%d%m%y%H%M%S") > datetime.today().date():
@@ -69,8 +69,6 @@ class smallVehicles(models.Model):
     #    else:
     #        self.inspection_active = False
     #        print('Inspection is expired!')
-
-
 
     def __str__(self):
         return format(self.nickname)

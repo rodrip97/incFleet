@@ -121,9 +121,14 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = 'inventory/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'inventory/static')
+STATIC_URL = 'Inventory/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'Inventory/static')
 DJANGO_CONFIG = []
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 CACHES = {
     "default": {
