@@ -17,6 +17,4 @@ urlpatterns = [
     path('TruckDetailView/<int:pk>', views.TruckDetailView, name='truckdetails'),
     path('VehicleDetails/<int:pk>', views.VehicleDetailView, name='vehicledetails'),
 
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

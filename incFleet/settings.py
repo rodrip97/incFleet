@@ -13,8 +13,7 @@ import redis
 from pathlib import Path
 import os
 
-
-#r = redis.from_url(os.environ.get("REDIS_URL"))
+# r = redis.from_url(os.environ.get("REDIS_URL"))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -121,31 +120,18 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = 'Inventory/static/'
+STATIC_URL = '/Inventory/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'Inventory/static')
 DJANGO_CONFIG = []
 
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get('REDIS_URL'),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
 # Celery Broker - Redis
 CELERY_BROKER_URL = 'redis://:pf60019e00647f9b98b723898933f15b13722ab07b301451115c124e80838b0a8@ec2-52-23-125-111.compute-1.amazonaws.com:31830'
 CELERY_RESULT_BACKEND = 'redis://:pf60019e00647f9b98b723898933f15b13722ab07b301451115c124e80838b0a8@ec2-52-23-125-111.compute-1.amazonaws.com:31830'
-BROKER_POOL_LIMIT = 1
-BROKER_CONNECTION_MAX_RETRIES = None
 CELERY_TASK_SERIALIZER = "json"
-CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+CELERY_ACCEPT_CONTENT = ["json"]
 
 # EMAIL CONFIGS
 EMAIL_HOST = 'smtp.gmail.com'

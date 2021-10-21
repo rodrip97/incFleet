@@ -1,7 +1,7 @@
 {% extends 'inventory/base.html' %}
 {% block body %}
 <div class="container">
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <h4>{{ header }}</h4>
     {% for field in form %}

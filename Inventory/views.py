@@ -1,7 +1,5 @@
 import datetime
-
 from django.shortcuts import render, redirect, get_object_or_404
-
 from .forms import *
 from .models import *
 
@@ -31,7 +29,7 @@ def convert_date(date_input):
 def addTrucks(request):
     data = request.POST
     if request.method == "POST":
-        form = trucksForms(request.POST)
+        form = trucksForms(request.POST, request.FILES)
         if form.is_valid():
             truck_info = trucks(
                 nickname=data['nickname'],
@@ -48,6 +46,7 @@ def addTrucks(request):
                 oilChange=data['oilChange'],
                 isMonitored=data['isMonitored'],
                 status=data['status'],
+                title=request.FILES['title'],
             )
             truck_info.save()
             return redirect('index')
@@ -59,7 +58,7 @@ def addTrucks(request):
 def addSmallVehicles(request):
     data = request.POST
     if request.method == "POST":
-        form = smallVehiclesForm(request.POST)
+        form = smallVehiclesForm(request.POST, request.FILES)
         if form.is_valid():
             smallVehicles_info = smallVehicles(
                 nickname=data['nickname'],
@@ -88,9 +87,49 @@ def editTrucks(request, pk):
     item = get_object_or_404(trucks, pk=pk)
 
     if request.method == "POST":
+        print(request.FILES)
         form = trucksForms(request.POST, instance=item)
+        data = request.POST
         if form.is_valid():
-            form.save()
+            try:
+                truck = trucks.objects.get(vin=data['vin'])
+                truck.nickname = data['nickname']
+                truck.make = data['make']
+                truck.model = data['model']
+                truck.type = data['type']
+                truck.plate = data['plate']
+                truck.ezPass = data['ezPass']
+                truck.mileage = data['mileage']
+                truck.reportedProblem = data['reportedProblem']
+                truck.inspection = convert_date(data['inspection'])
+                truck.registration = convert_date(data['registration'])
+                truck.oilChange = data['oilChange']
+                truck.isMonitored = data['isMonitored']
+                truck.status = data['status']
+                truck.title = request.FILES['title']
+                truck.save()
+
+            except FileNotFoundError:
+                truck_info = trucks(
+                    nickname=data['nickname'],
+                    make=data['make'],
+                    model=data['model'],
+                    type=data['type'],
+                    plate=data['plate'],
+                    vin=data['vin'],
+                    ezPass=data['ezPass'],
+                    mileage=data['mileage'],
+                    reportedProblem=data['reportedProblem'],
+                    inspection=convert_date(data['inspection']),
+                    registration=convert_date(data['registration']),
+                    oilChange=data['oilChange'],
+                    isMonitored=data['isMonitored'],
+                    status=data['status'],
+                    title=request.FILES['title'],
+                )
+                truck_info.save()
+            # except Exception as e:
+            #     print(e)
             return redirect('index')
     else:
         form = trucksForms(instance=item)
@@ -138,4 +177,3 @@ def VehicleDetailView(request, pk):
     context = {'items': items}
 
     return render(request, 'Inventory/vehicle_details.html', context)
-
