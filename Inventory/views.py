@@ -1,5 +1,7 @@
 import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
+
 from .forms import *
 from .models import *
 
@@ -47,6 +49,7 @@ def addTrucks(request):
                 isMonitored=data['isMonitored'],
                 status=data['status'],
                 title=request.FILES['title'],
+                insurance_card=request.FILES['insurance_card'],
             )
             truck_info.save()
             return redirect('index')
@@ -74,7 +77,8 @@ def addSmallVehicles(request):
                 registration=convert_date(data['registration']),
                 oilChange=data['oilChange'],
                 isMonitored=data['isMonitored'],
-                status=data['status'],
+                status=data['status'], title=request.FILES['title'],
+                insurance_card=request.FILES['insurance_card'],
             )
             smallVehicles_info.save()
             return redirect('index')
@@ -87,8 +91,7 @@ def editTrucks(request, pk):
     item = get_object_or_404(trucks, pk=pk)
 
     if request.method == "POST":
-        print(request.FILES)
-        form = trucksForms(request.POST, instance=item)
+        form = trucksForms(request.POST or None, request.FILES or None, instance=item)
         data = request.POST
         if form.is_valid():
             try:
@@ -107,6 +110,7 @@ def editTrucks(request, pk):
                 truck.isMonitored = data['isMonitored']
                 truck.status = data['status']
                 truck.title = request.FILES['title']
+                truck.insurance_card = request.FILES['insurance_card']
                 truck.save()
 
             except FileNotFoundError:
@@ -126,10 +130,9 @@ def editTrucks(request, pk):
                     isMonitored=data['isMonitored'],
                     status=data['status'],
                     title=request.FILES['title'],
+                    insurance_card=request.FILES['insurance_card']
                 )
                 truck_info.save()
-            # except Exception as e:
-            #     print(e)
             return redirect('index')
     else:
         form = trucksForms(instance=item)
@@ -140,9 +143,51 @@ def editSmallVehicles(request, pk):
     item = get_object_or_404(smallVehicles, pk=pk)
 
     if request.method == "POST":
+        print(request.FILES)
         form = smallVehiclesForm(request.POST, instance=item)
+        data = request.POST
         if form.is_valid():
-            form.save()
+            try:
+                car = smallVehicles.objects.get(vin=data['vin'])
+                car.nickname = data['nickname']
+                car.make = data['make']
+                car.model = data['model']
+                car.type = data['type']
+                car.plate = data['plate']
+                car.ezPass = data['ezPass']
+                car.mileage = data['mileage']
+                car.reportedProblem = data['reportedProblem']
+                car.inspection = convert_date(data['inspection'])
+                car.registration = convert_date(data['registration'])
+                car.oilChange = data['oilChange']
+                car.isMonitored = data['isMonitored']
+                car.status = data['status']
+                car.title.get = request.FILES['title']
+                car.insurance_card.get = request.FILES['insurance_card']
+                car.save()
+
+            except FileNotFoundError:
+                car_info = smallVehicles(
+                    nickname=data['nickname'],
+                    make=data['make'],
+                    model=data['model'],
+                    type=data['type'],
+                    plate=data['plate'],
+                    vin=data['vin'],
+                    ezPass=data['ezPass'],
+                    mileage=data['mileage'],
+                    reportedProblem=data['reportedProblem'],
+                    inspection=convert_date(data['inspection']),
+                    registration=convert_date(data['registration']),
+                    oilChange=data['oilChange'],
+                    isMonitored=data['isMonitored'],
+                    status=data['status'],
+                    title=request.FILES['title'],
+                    insurance_card=request.FILES['insurance_card']
+                )
+                car_info.save()
+            # except Exception as e:
+            #     print(e)
             return redirect('index')
     else:
         form = smallVehiclesForm(instance=item)
